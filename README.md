@@ -1,5 +1,5 @@
 # Final Project Proposal
-by Peihua Huang and Jackie Lin (pd 10)
+Peihua Huang and Jackie Lin (pd 10)
 
 ## Features 
 - light
