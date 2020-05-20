@@ -2,6 +2,7 @@
 Peihua Huang and Jackie Lin (pd 10)
 
 ## Features 
+We will be implementing the following commands in our project:
 - light
   - existing MDL command
   - will add light to symbol table
