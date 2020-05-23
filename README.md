@@ -2,7 +2,7 @@
 Peihua Huang and Jackie Lin (pd 10)
 
 ## Features 
-We will be implementing the following commands in our project:
+We will be implementing the following features in our project:
 - light
   - existing MDL command
   - will add light to symbol table
@@ -10,5 +10,7 @@ We will be implementing the following commands in our project:
  - mesh
     - existing MDL command
     - will use external .obj files for polygons (both quadrilateral and triangle faces)
+ - using vary to move lights
+    - requires changes to language 
   
   
