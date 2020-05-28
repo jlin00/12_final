@@ -10,6 +10,20 @@
 #include "symtab.h"
 #include "parser.h"
 
+//mesh code
+void parse_mesh(char * filename){
+  FILE *fp;
+  fp = fopen(filename, "r");
+  char str[100];
+  if (fp == NULL){ //exception
+    printf("Could not open file %s", filename);
+  }
+  while (fgets(str, 100, fp) != NULL){
+    printf("%s", str);
+  }
+  fclose(fp);
+}
+
 /*======== void draw_scanline() ==========
   Inputs: struct matrix *points
           int i

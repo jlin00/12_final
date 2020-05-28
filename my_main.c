@@ -445,6 +445,13 @@ void my_main() {
             light_index++;
           }
           break;
+        case MESH:
+          printf("Mesh: filename: %s",op[i].op.mesh.name);
+          if (op[i].op.mesh.constants != NULL)
+            {
+              printf("\tconstants: %s",op[i].op.mesh.constants->name);
+            }
+          break;
         case SAVE:
           printf("Save: %s",op[i].op.save.p->name);
           save_extension(t, op[i].op.save.p->name);

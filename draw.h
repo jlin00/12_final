@@ -7,6 +7,9 @@
 #include "symtab.h"
 #include "parser.h"
 
+void parse_mesh(char * filename);
+//void add_mesh(struct matrix * polys, points, order);
+
 void draw_scanline(int x0, double z0, int x1, double z1, int y, screen s, zbuffer zb, color c);
 void scanline_convert( struct matrix *points, int i, screen s, zbuffer zb, color il );
 
