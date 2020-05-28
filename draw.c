@@ -203,11 +203,11 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb,
       for (i = 0; i < num_lights; i++){
         color temp = get_lighting(normal, view, ambient, light[i], reflect);
         c.red += temp.red;
-        c.green = temp.green;
-        c.blue = temp.blue;
+        c.green += temp.green;
+        c.blue += temp.blue;
       }
       limit_color(&c);
-      printf("%d %d %d\n", c.red, c.green, c.blue);
+      // printf("%d %d %d\n", c.red, c.green, c.blue);
       scanline_convert(polygons, point, s, zb, c);
 
       /* draw_line( polygons->m[0][point], */
