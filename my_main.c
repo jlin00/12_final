@@ -73,8 +73,10 @@ void first_pass() {
   char frame_check = 0;
   extern int num_frames;
   extern char name[128];
+  extern int num_lights;
 
   num_frames = 1;
+  num_lights = 0;
   for (i=0;i<lastop;i++) {
 
     if (op[i].opcode == FRAMES) {
@@ -84,6 +86,9 @@ void first_pass() {
     else if (op[i].opcode == BASENAME) {
       strncpy( name, op[i].op.basename.p->name, sizeof( name ) );
       name_check = 1;
+    }
+    else if (op[i].opcode == LIGHT) {
+      num_lights ++;
     }
     else if (op[i].opcode == VARY) {
       vary_check = 1;
@@ -204,14 +209,17 @@ void my_main() {
   ambient.green = 50;
   ambient.blue = 50;
 
-  double light[2][3];
-  light[LOCATION][0] = 0;
-  light[LOCATION][1] = 0;
-  light[LOCATION][2] = 1;
+  double light[num_lights][2][3];
+  // printf("%d\n", num_lights);
+  struct light * curr_light;
+  int light_index = 0;
+  light[0][LOCATION][0] = 0;
+  light[0][LOCATION][1] = 0;
+  light[0][LOCATION][2] = 1;
 
-  light[COLOR][RED] = 255;
-  light[COLOR][GREEN] = 255;
-  light[COLOR][BLUE] = 255;
+  light[0][COLOR][RED] = 255;
+  light[0][COLOR][GREEN] = 255;
+  light[0][COLOR][BLUE] = 255;
 
   double view[3];
   view[0] = 0;
@@ -421,6 +429,21 @@ void my_main() {
         case POP:
           //printf("Pop");
           pop(systems);
+          break;
+        case LIGHT:
+          // printf("%s", op[i].op.light.p->name);
+          if (light_index < num_lights){
+            curr_light = lookup_symbol(op[i].op.light.p->name)->s.l;
+            light[light_index][LOCATION][0] = curr_light->l[0];
+            light[light_index][LOCATION][1] = curr_light->l[1];
+            light[light_index][LOCATION][2] = curr_light->l[2];
+
+            light[light_index][COLOR][RED] = curr_light->c[0];
+            light[light_index][COLOR][GREEN] = curr_light->c[1];
+            light[light_index][COLOR][BLUE] = curr_light->c[2];
+            // printf("%0.2lf %0.2lf %0.2lf\n", light[light_index][COLOR][RED], light[light_index][COLOR][GREEN], light[light_index][COLOR][BLUE]);
+            light_index++;
+          }
           break;
         case SAVE:
           printf("Save: %s",op[i].op.save.p->name);
