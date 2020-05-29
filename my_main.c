@@ -231,9 +231,9 @@ void my_main() {
 
   //default reflective constants if none are set in script file
   struct constants white;
-  white.r[AMBIENT_R] = 0.2;
-  white.g[AMBIENT_R] = 0.2;
-  white.b[AMBIENT_R] = 0.2;
+  white.r[AMBIENT_R] = 0.1;
+  white.g[AMBIENT_R] = 0.1;
+  white.b[AMBIENT_R] = 0.1;
 
   white.r[DIFFUSE_R] = 0.5;
   white.g[DIFFUSE_R] = 0.5;

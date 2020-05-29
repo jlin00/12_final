@@ -278,27 +278,13 @@ void add_mesh(struct matrix * polygons, char * filename){
       int i;
       int p0 = atof(strsep(&r, " ")) - 1;
       int p1 = atof(strsep(&r, " ")) - 1;
-      // printf("p0: %d\n", p0 + 1);
-      // printf("p1: %d\n", p1 + 1);
-      // printf("p2: %d\n", last + 1);
       add_polygon(polygons, v->m[0][p0], v->m[1][p0], v->m[2][p0],
-                            v->m[0][p1], v->m[1][p1], v->m[2][p1],
-                            v->m[0][last], v->m[1][last], v->m[2][last]);
-      printf("POLYGON POINTS: %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f\n",
-                            v->m[0][p0], v->m[1][p0], v->m[2][p0],
                             v->m[0][p1], v->m[1][p1], v->m[2][p1],
                             v->m[0][last], v->m[1][last], v->m[2][last]);
       for (i = 0; i < count - 3; i++){
         p0 = p1;
         p1 = atof(strsep(&r, " ")) - 1;
-        // printf("p0: %d\n", p0 + 1);
-        // printf("p1: %d\n", p1 + 1);
-        // printf("p2: %d\n", last + 1);
         add_polygon(polygons, v->m[0][p0], v->m[1][p0], v->m[2][p0],
-                              v->m[0][p1], v->m[1][p1], v->m[2][p1],
-                              v->m[0][last], v->m[1][last], v->m[2][last]);
-        printf("POLYGON POINTS: %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f\n",
-                              v->m[0][p0], v->m[1][p0], v->m[2][p0],
                               v->m[0][p1], v->m[1][p1], v->m[2][p1],
                               v->m[0][last], v->m[1][last], v->m[2][last]);
       }
