@@ -265,28 +265,19 @@ void add_mesh(struct matrix * polygons, char * filename){
     }
     else if (strncmp(token, "f", strlen(token)) == 0) {
       //find last token
-      char *s = malloc(100);
-      strcpy(s, line);
-      char * token;
-      int last, count = -1;
-      while ((token = strsep(&s, " ")) != NULL) {
-        last = atof(token) - 1;
-        count++;
-      }
+      int first = atof(strsep(&r, " ")) - 1;
 
       //add triangles
       int i;
-      int p0 = atof(strsep(&r, " ")) - 1;
       int p1 = atof(strsep(&r, " ")) - 1;
-      add_polygon(polygons, v->m[0][p0], v->m[1][p0], v->m[2][p0],
-                            v->m[0][p1], v->m[1][p1], v->m[2][p1],
-                            v->m[0][last], v->m[1][last], v->m[2][last]);
-      for (i = 0; i < count - 3; i++){
-        p0 = p1;
-        p1 = atof(strsep(&r, " ")) - 1;
-        add_polygon(polygons, v->m[0][p0], v->m[1][p0], v->m[2][p0],
+      int p2 = -1;
+      char * token;
+      while ((token = strsep(&r, " ")) != NULL){
+        p2 = atof(token) - 1;
+        add_polygon(polygons, v->m[0][first], v->m[1][first], v->m[2][first],
                               v->m[0][p1], v->m[1][p1], v->m[2][p1],
-                              v->m[0][last], v->m[1][last], v->m[2][last]);
+                              v->m[0][p2], v->m[1][p2], v->m[2][p2]);
+        p1 = p2;
       }
     }
   }
