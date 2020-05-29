@@ -216,8 +216,8 @@ void my_main() {
   // printf("%d\n", num_lights);
   struct light * curr_light;
   int light_index = 0;
-  light[0][LOCATION][0] = 0;
-  light[0][LOCATION][1] = 0;
+  light[0][LOCATION][0] = 0.5;
+  light[0][LOCATION][1] = 0.75;
   light[0][LOCATION][2] = 1;
 
   light[0][COLOR][RED] = 255;
@@ -231,9 +231,9 @@ void my_main() {
 
   //default reflective constants if none are set in script file
   struct constants white;
-  white.r[AMBIENT_R] = 0.1;
-  white.g[AMBIENT_R] = 0.1;
-  white.b[AMBIENT_R] = 0.1;
+  white.r[AMBIENT_R] = 0.2;
+  white.g[AMBIENT_R] = 0.2;
+  white.b[AMBIENT_R] = 0.2;
 
   white.r[DIFFUSE_R] = 0.5;
   white.g[DIFFUSE_R] = 0.5;
@@ -449,11 +449,18 @@ void my_main() {
           }
           break;
         case MESH:
-          printf("Mesh: filename: %s",op[i].op.mesh.name);
+          printf("Mesh: filename: %s\n",op[i].op.mesh.name);
           if (op[i].op.mesh.constants != NULL)
             {
-              printf("\tconstants: %s",op[i].op.mesh.constants->name);
+              //printf("\tconstants: %s",op[i].op.mesh.constants->name);
+              reflect = lookup_symbol(op[i].op.mesh.constants->name)->s.c;
             }
+          add_mesh(tmp, op[i].op.mesh.name);
+          matrix_mult( peek(systems), tmp );
+          draw_polygons(tmp, t, zb, view, light, ambient,
+                        reflect);
+          tmp->lastcol = 0;
+          reflect = &white;
           break;
         case SAVE:
           printf("Save: %s",op[i].op.save.p->name);

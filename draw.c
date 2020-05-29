@@ -9,20 +9,7 @@
 #include "gmath.h"
 #include "symtab.h"
 #include "parser.h"
-
-//mesh code
-void parse_mesh(char * filename){
-  FILE *fp;
-  fp = fopen(filename, "r");
-  char str[100];
-  if (fp == NULL){ //exception
-    printf("Could not open file %s", filename);
-  }
-  while (fgets(str, 100, fp) != NULL){
-    printf("%s", str);
-  }
-  fclose(fp);
-}
+#include <string.h>
 
 /*======== void draw_scanline() ==========
   Inputs: struct matrix *points
@@ -247,6 +234,77 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb,
       /*            s, zb, c) */;
     }
   }
+}
+
+/*======== void add_mesh() ==========
+  Inputs:   struct matrix * polygons
+            char * filename
+
+  add the points from given obj file based on v and f commands.
+  ====================*/
+void add_mesh(struct matrix * polygons, char * filename){
+  FILE *fp;
+  fp = fopen(filename, "r");
+  char line[100];
+  char *token;
+  struct matrix * v = new_matrix(4, 4); //list of all vertices
+  if (fp == NULL){ //exception
+    printf("Could not open file: %s", filename);
+    exit(0);
+  }
+  while (fgets(line, 100, fp) != NULL){
+    char *r = malloc(100);
+    strcpy(r, line);
+    // printf("%s", r);
+    token = strsep(&r, " ");
+    if (strncmp(token, "v", strlen(token)) == 0) {
+      float x = atof(strsep(&r, " "));
+      float y = atof(strsep(&r, " "));
+      float z = atof(strsep(&r, " "));
+      add_point(v, x, y, z);
+    }
+    else if (strncmp(token, "f", strlen(token)) == 0) {
+      //find last token
+      char *s = malloc(100);
+      strcpy(s, line);
+      char * token;
+      int last, count = -1;
+      while ((token = strsep(&s, " ")) != NULL) {
+        last = atof(token) - 1;
+        count++;
+      }
+
+      //add triangles
+      int i;
+      int p0 = atof(strsep(&r, " ")) - 1;
+      int p1 = atof(strsep(&r, " ")) - 1;
+      // printf("p0: %d\n", p0 + 1);
+      // printf("p1: %d\n", p1 + 1);
+      // printf("p2: %d\n", last + 1);
+      add_polygon(polygons, v->m[0][p0], v->m[1][p0], v->m[2][p0],
+                            v->m[0][p1], v->m[1][p1], v->m[2][p1],
+                            v->m[0][last], v->m[1][last], v->m[2][last]);
+      printf("POLYGON POINTS: %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f\n",
+                            v->m[0][p0], v->m[1][p0], v->m[2][p0],
+                            v->m[0][p1], v->m[1][p1], v->m[2][p1],
+                            v->m[0][last], v->m[1][last], v->m[2][last]);
+      for (i = 0; i < count - 3; i++){
+        p0 = p1;
+        p1 = atof(strsep(&r, " ")) - 1;
+        // printf("p0: %d\n", p0 + 1);
+        // printf("p1: %d\n", p1 + 1);
+        // printf("p2: %d\n", last + 1);
+        add_polygon(polygons, v->m[0][p0], v->m[1][p0], v->m[2][p0],
+                              v->m[0][p1], v->m[1][p1], v->m[2][p1],
+                              v->m[0][last], v->m[1][last], v->m[2][last]);
+        printf("POLYGON POINTS: %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f %.6f\n",
+                              v->m[0][p0], v->m[1][p0], v->m[2][p0],
+                              v->m[0][p1], v->m[1][p1], v->m[2][p1],
+                              v->m[0][last], v->m[1][last], v->m[2][last]);
+      }
+    }
+  }
+  fclose(fp);
 }
 
 /*======== void add_box() ==========
