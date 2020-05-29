@@ -191,6 +191,9 @@ void my_main() {
   struct vary_node ** knobs;
   struct vary_node * vn;
   first_pass();
+  if (num_lights == 0){
+    num_lights = 1;
+  }
   knobs = second_pass();
   char frame_name[128];
   int f;
