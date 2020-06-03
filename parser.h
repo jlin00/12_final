@@ -22,6 +22,7 @@ struct command
       SYMTAB *p;
       SYMTAB *q;
       double c[4];
+      double axis[3];
     } light;
     struct {
       double c[4];

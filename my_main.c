@@ -438,7 +438,6 @@ void my_main() {
           if (light_index == num_lights){
             light_index = 0;
           }
-          printf("%d\n", light_index);
           curr_light = lookup_symbol(op[i].op.light.p->name)->s.l;
           light[light_index][LOCATION][0] = curr_light->l[0];
           light[light_index][LOCATION][1] = curr_light->l[1];
@@ -447,12 +446,18 @@ void my_main() {
           if (op[i].op.light.q != NULL) {
             // printf("\tknob: %s",op[i].op.light.q->name);
             knob_value = lookup_symbol(op[i].op.light.q->name)->s.value;
-            printf("%0.2lf\n", knob_value);
-            light[light_index][LOCATION][0] += knob_value;
-            light[light_index][LOCATION][1] += knob_value;
-            light[light_index][LOCATION][2] += knob_value;
+            double *axis = op[i].op.light.axis;
+            // printf("%0.2lf %0.2lf %0.2lf\n", axis[0], axis[1], axis[2]);
+            if (axis[0] == 1){
+              light[light_index][LOCATION][0] += knob_value;
+            }
+            if (axis[1] == 1){
+              light[light_index][LOCATION][1] += knob_value;
+            }
+            if (axis[2] == 1){
+              light[light_index][LOCATION][2] += knob_value;
+            }
           }
-          printf("%0.2lf %0.2lf %0.2lf\n", light[light_index][LOCATION][0], light[light_index][LOCATION][1], light[light_index][LOCATION][2]);
           light[light_index][COLOR][RED] = curr_light->c[0];
           light[light_index][COLOR][GREEN] = curr_light->c[1];
           light[light_index][COLOR][BLUE] = curr_light->c[2];
