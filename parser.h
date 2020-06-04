@@ -60,6 +60,13 @@ struct command
     } cone;
     struct {
       SYMTAB *constants;
+      double d[4];
+      double w;
+      double h;
+      SYMTAB *cs;
+    } pyramid;
+    struct {
+      SYMTAB *constants;
       double d0[3];
       double d1[3];
       double d2[3];

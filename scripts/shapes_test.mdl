@@ -1,8 +1,11 @@
+frames 50
+basename shapes
 push
 move 250 250 0
-rotate x 20
+rotate x 360 spinny
 rotate y 20
 rotate z 20
 cylinder 0 0 0 50 200
 cone -150 0 0 50 200
-display
+pyramid 150 50 0 100 200
+vary spinny 0 49 0 1

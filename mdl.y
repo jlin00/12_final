@@ -29,7 +29,7 @@
 %token <val> DOUBLE
 %token <string> LIGHT AMBIENT
 %token <string> CONSTANTS SAVE_COORDS CAMERA
-%token <string> SPHERE TORUS BOX LINE CS MESH TEXTURE CYLINDER CONE
+%token <string> SPHERE TORUS BOX LINE CS MESH TEXTURE CYLINDER CONE PYRAMID
 %token <string> STRING
 %token <string> SET MOVE SCALE ROTATE BASENAME SAVE_KNOBS TWEEN FRAMES VARY
 %token <string> PUSH POP SAVE GENERATE_RAYFILES
@@ -913,6 +913,68 @@ CONE STRING DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE STRING
   op[lastop].op.cone.cs = add_symbol($8,SYM_MATRIX,m);
   c = (struct constants *)malloc(sizeof(struct constants));
   op[lastop].op.cone.constants = add_symbol($2,SYM_CONSTANTS,c);
+  lastop++;
+}|
+
+PYRAMID DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE
+{
+  lineno++;
+  op[lastop].opcode = PYRAMID;
+  op[lastop].op.pyramid.d[0] = $2;
+  op[lastop].op.pyramid.d[1] = $3;
+  op[lastop].op.pyramid.d[2] = $4;
+  op[lastop].op.pyramid.d[3] = 0;
+  op[lastop].op.pyramid.w = $5;
+  op[lastop].op.pyramid.h = $6;
+  op[lastop].op.pyramid.constants = NULL;
+  op[lastop].op.pyramid.cs = NULL;
+  lastop++;
+}|
+PYRAMID DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE STRING
+{
+  lineno++;
+  op[lastop].opcode = PYRAMID;
+  op[lastop].op.pyramid.d[0] = $2;
+  op[lastop].op.pyramid.d[1] = $3;
+  op[lastop].op.pyramid.d[2] = $4;
+  op[lastop].op.pyramid.d[3] = 0;
+  op[lastop].op.pyramid.w = $5;
+  op[lastop].op.pyramid.h = $6;
+  op[lastop].op.pyramid.constants = NULL;
+  m = (struct matrix *)new_matrix(4,4);
+  op[lastop].op.pyramid.cs = add_symbol($7,SYM_MATRIX,m);
+  lastop++;
+}|
+PYRAMID STRING DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE
+{
+  lineno++;
+  op[lastop].opcode = PYRAMID;
+  op[lastop].op.pyramid.d[0] = $3;
+  op[lastop].op.pyramid.d[1] = $4;
+  op[lastop].op.pyramid.d[2] = $5;
+  op[lastop].op.pyramid.d[3] = 0;
+  op[lastop].op.pyramid.w = $6;
+  op[lastop].op.pyramid.h = $7;
+  op[lastop].op.pyramid.cs = NULL;
+  c = (struct constants *)malloc(sizeof(struct constants));
+  op[lastop].op.pyramid.constants = add_symbol($2,SYM_CONSTANTS,c);
+  lastop++;
+}|
+PYRAMID STRING DOUBLE DOUBLE DOUBLE DOUBLE DOUBLE STRING
+{
+  lineno++;
+  op[lastop].opcode = PYRAMID;
+  op[lastop].op.pyramid.d[0] = $3;
+  op[lastop].op.pyramid.d[1] = $4;
+  op[lastop].op.pyramid.d[2] = $5;
+  op[lastop].op.pyramid.d[3] = 0;
+  op[lastop].op.pyramid.w = $6;
+  op[lastop].op.pyramid.h = $7;
+  op[lastop].op.pyramid.constants = NULL;
+  m = (struct matrix *)new_matrix(4,4);
+  op[lastop].op.pyramid.cs = add_symbol($8,SYM_MATRIX,m);
+  c = (struct constants *)malloc(sizeof(struct constants));
+  op[lastop].op.pyramid.constants = add_symbol($2,SYM_CONSTANTS,c);
   lastop++;
 };
 %%

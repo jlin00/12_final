@@ -69,6 +69,7 @@ mesh [constants] :filename [coord_system]
 
 cylinder [constants] x y z r h [coord_system]
 cone [constants] x y z r h [coord_system]
+pyramid [constants] x y z w h [coord_system]
 
 Knobs/Animation
 ---------------

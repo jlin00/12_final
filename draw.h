@@ -40,10 +40,14 @@ void add_cylinder(struct matrix * edges,
                   double cx, double cy, double cz,
                   double r, double h, int step);
 void add_cone(struct matrix * edges,
-                  double cx, double cy, double cz,
-                  double r, double h, int step);
+              double cx, double cy, double cz,
+              double r, double h, int step);
 struct matrix * generate_circle(double cx, double cy, double cz,
                        double r, int step);
+void add_pyramid(struct matrix * edges,
+                 double x, double y, double z,
+                 double width, double height);
+
 //2D Curves
 void add_circle( struct matrix * points,
                  double cx, double cy, double cz,

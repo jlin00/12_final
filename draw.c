@@ -383,6 +383,37 @@ struct matrix * generate_circle(double cx, double cy, double cz,
   //NOTE: when theta increases, x and z increase in the + direction, so the circle is drawn CLOCKWISE
 }
 
+/*======== void add_pyramid() ==========
+  Inputs:   struct matrix * edges
+            double x
+            double y
+            double z
+            double width
+            double height
+
+  add the points for a square pyramid whose
+  bottom-left-front corner is (x, y, z) with width,
+  height dimensions.
+  ====================*/
+void add_pyramid(struct matrix * polygons,
+                 double ax, double ay, double az,
+                 double width, double height){
+  //base coordinates
+  double x0, x1, y, z0, z1;
+  x0 = ax - (width / 2);
+  x1 = ax + (width / 2);
+  z0 = az + (width / 2);
+  z1 = az - (width / 2);
+  y = ay - height;
+
+  add_polygon(polygons, ax, ay, az, x0, y, z0, x1, y, z0); //front
+  add_polygon(polygons, ax, ay, az, x1, y, z0, x1, y, z1); //right
+  add_polygon(polygons, ax, ay, az, x1, y, z1, x0, y, z1); //back
+  add_polygon(polygons, ax, ay, az, x0, y, z1, x0, y, z0); //left
+  add_polygon(polygons, x0, y, z1, x1, y, z1, x1, y, z0);
+  add_polygon(polygons, x0, y, z1, x1, y, z0, x0, y, z0);
+}
+
 /*======== void add_box() ==========
   Inputs:   struct matrix * edges
             double x

@@ -514,6 +514,24 @@ void my_main() {
           tmp->lastcol = 0;
           reflect = &white;
           break;
+        case PYRAMID:
+          if (op[i].op.pyramid.constants != NULL) {
+            //printf("\tconstants: %s",op[i].op.pyramid.constants->name);
+            reflect = lookup_symbol(op[i].op.pyramid.constants->name)->s.c;
+          }
+          if (op[i].op.pyramid.cs != NULL) {
+            //printf("\tcs: %s",op[i].op.pyramid.cs->name);
+          }
+          add_pyramid(tmp, op[i].op.pyramid.d[0],
+                     op[i].op.pyramid.d[1],
+                     op[i].op.pyramid.d[2],
+                     op[i].op.pyramid.w, op[i].op.pyramid.h);
+          matrix_mult( peek(systems), tmp );
+          draw_polygons(tmp, t, zb, view, light, ambient,
+                        reflect);
+          tmp->lastcol = 0;
+          reflect = &white;
+          break;
         case SAVE:
           printf("Save: %s",op[i].op.save.p->name);
           save_extension(t, op[i].op.save.p->name);
