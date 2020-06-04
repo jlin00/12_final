@@ -465,7 +465,7 @@ void my_main() {
           light_index++;
           break;
         case MESH:
-          printf("Mesh: filename: %s\n",op[i].op.mesh.name);
+          //printf("Mesh: filename: %s\n",op[i].op.mesh.name);
           if (op[i].op.mesh.constants != NULL)
             {
               //printf("\tconstants: %s",op[i].op.mesh.constants->name);

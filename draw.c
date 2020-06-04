@@ -245,15 +245,15 @@ void draw_polygons( struct matrix *polygons, screen s, zbuffer zb,
 void add_mesh(struct matrix * polygons, char * filename){
   FILE *fp;
   fp = fopen(filename, "r");
-  char line[100];
+  char line[256];
   char *token;
   struct matrix * v = new_matrix(4, 4); //list of all vertices
   if (fp == NULL){ //exception
     printf("Could not open file: %s", filename);
     exit(0);
   }
-  while (fgets(line, 100, fp) != NULL){
-    char *r = malloc(100);
+  while (fgets(line, 256, fp) != NULL){
+    char *r = malloc(256);
     strcpy(r, line);
     // printf("%s", r);
     token = strsep(&r, " ");
@@ -264,7 +264,7 @@ void add_mesh(struct matrix * polygons, char * filename){
       add_point(v, x, y, z);
     }
     else if (strncmp(token, "f", strlen(token)) == 0) {
-      //find last token
+      //find first token
       int first = atof(strsep(&r, " ")) - 1;
 
       //add triangles

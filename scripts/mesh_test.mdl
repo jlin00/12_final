@@ -1,12 +1,12 @@
 //constants
 constants silver 0.19225 0.50754 0.508273 0.19225 0.50754 0.508273 0.19225 0.50754 0.508273
-//Ccode
+//code
 push
-move 250 150 0
+move 250 450 0
 rotate x 20
-rotate y -20
-scale 8 8 8
-mesh silver :skyscraper.obj
+rotate y 60
+scale 0.5 0.5 0.5
+mesh silver :trumpet.obj
 display
 save
-skyscraper.png
+trumpet.png
