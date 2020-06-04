@@ -284,6 +284,73 @@ void add_mesh(struct matrix * polygons, char * filename){
   fclose(fp);
 }
 
+/*======== void add_cylinder() ==========
+  Inputs:   struct matrix * edges
+            double cx
+            double cy
+            double cz
+            double r
+            double h
+            int step
+
+  add the points for a cylinder whose
+  center is (cx, cy, cz) with radius r and height h
+  using step points per cylinder.
+  ====================*/
+void add_cylinder(struct matrix * edges,
+                  double cx, double cy, double cz,
+                  double r, double h, int step){
+  struct matrix *top = generate_cylinder(cx, cy, cz, r, step); //top cap
+  struct matrix *bottom = generate_cylinder(cx, cy - h, cz, r, step); //bottom cap
+
+  int i, j;
+  for (i = 0; i < step; i++){
+    j = (i + 1) % step;
+    //top cap
+    add_polygon(edges, cx, cy, cz,
+                top->m[0][j], top->m[1][j], top->m[2][j],
+                top->m[0][i], top->m[1][i], top->m[2][i]);
+    //bottom cap
+    add_polygon(edges, cx, cy - h, cz,
+                bottom->m[0][i], bottom->m[1][i], bottom->m[2][i],
+                bottom->m[0][j], bottom->m[1][j], bottom->m[2][j]);
+    //surface triangles
+    add_polygon(edges, top->m[0][i], top->m[1][i], top->m[2][i],
+                bottom->m[0][j], bottom->m[1][j], bottom->m[2][j],
+                bottom->m[0][i], bottom->m[1][i], bottom->m[2][i]);
+    add_polygon(edges, bottom->m[0][j], bottom->m[1][j], bottom->m[2][j],
+                top->m[0][i], top->m[1][i], top->m[2][i],
+                top->m[0][j], top->m[1][j], top->m[2][j]);
+
+  }
+}
+
+/*======== void generate_cylinder() ==========
+  Inputs:   double cx
+            double cy
+            double cz
+            double r
+            double h
+            int step
+
+  generates all the points for the cylinder cap whose
+  center is (cx, cy, cz) with radius r and height h
+  using step points per cylinder.
+  ====================*/
+struct matrix * generate_cylinder(double cx, double cy, double cz,
+                       double r, int step){
+  struct matrix *points = new_matrix(4, step * step);
+  int i;
+  double x, z, rot;
+  for (i = 0; i < step; i++){
+    rot = (double)i / step;
+    x = r * cos(2*M_PI * rot) + cx;
+    z = r * sin(2*M_PI * rot) + cz;
+    add_point(points, x, cy, z);
+  }
+  return points;
+}
+
 /*======== void add_box() ==========
   Inputs:   struct matrix * edges
             double x

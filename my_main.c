@@ -478,6 +478,24 @@ void my_main() {
           tmp->lastcol = 0;
           reflect = &white;
           break;
+        case CYLINDER:
+          if (op[i].op.cylinder.constants != NULL) {
+            //printf("\tconstants: %s",op[i].op.cylinder.constants->name);
+            reflect = lookup_symbol(op[i].op.cylinder.constants->name)->s.c;
+          }
+          if (op[i].op.cylinder.cs != NULL) {
+            //printf("\tcs: %s",op[i].op.cylinder.cs->name);
+          }
+          add_cylinder(tmp, op[i].op.cylinder.d[0],
+                     op[i].op.cylinder.d[1],
+                     op[i].op.cylinder.d[2],
+                     op[i].op.cylinder.r, op[i].op.cylinder.h, step_3d);
+          matrix_mult( peek(systems), tmp );
+          draw_polygons(tmp, t, zb, view, light, ambient,
+                        reflect);
+          tmp->lastcol = 0;
+          reflect = &white;
+          break;
         case SAVE:
           printf("Save: %s",op[i].op.save.p->name);
           save_extension(t, op[i].op.save.p->name);
