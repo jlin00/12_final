@@ -39,9 +39,11 @@ struct matrix * generate_torus( double cx, double cy, double cz,
 void add_cylinder(struct matrix * edges,
                   double cx, double cy, double cz,
                   double r, double h, int step);
-struct matrix * generate_cylinder(double cx, double cy, double cz,
+void add_cone(struct matrix * edges,
+                  double cx, double cy, double cz,
+                  double r, double h, int step);
+struct matrix * generate_circle(double cx, double cy, double cz,
                        double r, int step);
-
 //2D Curves
 void add_circle( struct matrix * points,
                  double cx, double cy, double cz,

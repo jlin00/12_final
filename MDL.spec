@@ -68,6 +68,7 @@ mesh [constants] :filename [coord_system]
 			  and or edge list directly.
 
 cylinder [constants] x y z r h [coord_system]
+cone [constants] x y z r h [coord_system]
 
 Knobs/Animation
 ---------------

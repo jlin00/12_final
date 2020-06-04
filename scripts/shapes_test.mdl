@@ -4,4 +4,5 @@ rotate x 20
 rotate y 20
 rotate z 20
 cylinder 0 0 0 50 200
+cone -150 0 0 50 200
 display

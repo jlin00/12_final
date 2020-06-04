@@ -300,8 +300,8 @@ void add_mesh(struct matrix * polygons, char * filename){
 void add_cylinder(struct matrix * edges,
                   double cx, double cy, double cz,
                   double r, double h, int step){
-  struct matrix *top = generate_cylinder(cx, cy, cz, r, step); //top cap
-  struct matrix *bottom = generate_cylinder(cx, cy - h, cz, r, step); //bottom cap
+  struct matrix *top = generate_circle(cx, cy, cz, r, step); //top cap
+  struct matrix *bottom = generate_circle(cx, cy - h, cz, r, step); //bottom cap
 
   int i, j;
   for (i = 0; i < step; i++){
@@ -325,7 +325,38 @@ void add_cylinder(struct matrix * edges,
   }
 }
 
-/*======== void generate_cylinder() ==========
+/*======== void add_cone() ==========
+  Inputs:   struct matrix * edges
+            double cx
+            double cy
+            double cz
+            double r
+            double h
+            int step
+
+  add the points for a cone whose
+  center is (cx, cy, cz) with radius r and height h
+  using step points per cone.
+  ====================*/
+void add_cone(struct matrix * edges,
+                  double cx, double cy, double cz,
+                  double r, double h, int step){
+  struct matrix *bottom = generate_circle(cx, cy, cz, r, step);
+  int i, j;
+  for (i = 0; i < step; i++){
+    j = (i + 1) % step;
+    //bottom cap
+    add_polygon(edges, cx, cy, cz,
+                bottom->m[0][i], bottom->m[1][i], bottom->m[2][i],
+                bottom->m[0][j], bottom->m[1][j], bottom->m[2][j]);
+    //surface triangle
+    add_polygon(edges, cx, cy + h, cz,
+                bottom->m[0][j], bottom->m[1][j], bottom->m[2][j],
+                bottom->m[0][i], bottom->m[1][i], bottom->m[2][i]);
+  }
+}
+
+/*======== void generate_circle() ==========
   Inputs:   double cx
             double cy
             double cz
@@ -337,7 +368,7 @@ void add_cylinder(struct matrix * edges,
   center is (cx, cy, cz) with radius r and height h
   using step points per cylinder.
   ====================*/
-struct matrix * generate_cylinder(double cx, double cy, double cz,
+struct matrix * generate_circle(double cx, double cy, double cz,
                        double r, int step){
   struct matrix *points = new_matrix(4, step * step);
   int i;
@@ -349,6 +380,7 @@ struct matrix * generate_cylinder(double cx, double cy, double cz,
     add_point(points, x, cy, z);
   }
   return points;
+  //NOTE: when theta increases, x and z increase in the + direction, so the circle is drawn CLOCKWISE
 }
 
 /*======== void add_box() ==========

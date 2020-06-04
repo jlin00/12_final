@@ -55,6 +55,7 @@ strcpy(yylval.string, yytext); return SHADING_TYPE;}
 "display" {return DISPLAY;}
 "web" {return WEB;}
 "cylinder" {return CYLINDER;}
+"cone" {return CONE;}
 
 ":" {return CO;}
 
