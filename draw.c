@@ -392,7 +392,7 @@ struct matrix * generate_circle(double cx, double cy, double cz,
             double height
 
   add the points for a square pyramid whose
-  bottom-left-front corner is (x, y, z) with width,
+  apex is (x, y, z) with width,
   height dimensions.
   ====================*/
 void add_pyramid(struct matrix * polygons,
