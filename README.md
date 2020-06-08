@@ -5,8 +5,8 @@ Peihua Huang and Jackie Lin (pd 10)
 We will be implementing the following features in our project:
 - light
     ```
-    light lightname r g b x y z //creates a light with rgb values r, g, b at location x, y, z
-    light lightname r g b x y z [knob] [x_axis] [y_axis] [z_axis] //creates a moving light that starts moving from location x, y, z
+    light lightname r g b x y z //creates a light with rgb values r, g, b at (x, y, z)
+    light lightname r g b x y z [knob] [x_axis] [y_axis] [z_axis] //creates a moving light that starts moving from (x, y, z)
     //if any of the axis is set to 0, the light will not move on that axis, if it's set to 1, the light will move
     ```
   - existing MDL command
